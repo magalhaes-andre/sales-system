@@ -20,15 +20,15 @@ package com.magalhaes.andre.service;
 public class SaleService {
 
     @Inject
-    SaleRepository repository;
+    private SaleRepository repository;
     @Inject
-    SalesmanService salesmanService;
+    private SalesmanService salesmanService;
     @Inject
-    ProductService productService;
+    private ProductService productService;
 
     public Uni<Void> createSale(SaleRequest request) {
         Sale sale = new Sale();
-        sale.setSalesman(populateSalesman(request.getSalesmanRegistration()).await().indefinitely());
+        sale.setSalesman(populateSalesman(request.getSalesmanRegistration()));
         sale.setProducts(populateProducts(request.getProductsNames()));
         checkForCompleteInput(sale);
         sale.setSaleTotal(generateTotal(sale));
@@ -58,8 +58,8 @@ public class SaleService {
                 .sum();
     }
 
-    private Uni<Salesman> populateSalesman(Integer registration){
-        return salesmanService.findByRegistration(registration);
+    private Salesman populateSalesman(Integer salesmanRegistration){
+        return salesmanService.findByRegistration(salesmanRegistration).await().indefinitely();
     }
 
     private List<Product> populateProducts(List<String> productsNames){

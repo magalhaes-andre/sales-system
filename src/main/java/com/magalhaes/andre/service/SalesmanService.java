@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import static java.util.Objects.isNull;
 public class SalesmanService {
 
     @Inject
-    SalesmanRepository repository;
+    private SalesmanRepository repository;
 
     public Uni<Salesman> createSalesman(Salesman salesman) {
         checkForCompleteInput(salesman);
@@ -27,12 +28,7 @@ public class SalesmanService {
 
     public Uni<Salesman> findByRegistration(Integer registration){
         return repository.findByRegistration(registration)
-                .onItem().ifNull().failWith(new NotFoundException());
-    }
-
-    public Uni<Salesman> findByObjectId(ObjectId id){
-        return repository.findById(id)
-                .onItem().ifNull().failWith(new NotFoundException());
+                .onItem().ifNull().failWith(new InternalServerErrorException());
     }
 
     public Uni<List<Salesman>> list(){

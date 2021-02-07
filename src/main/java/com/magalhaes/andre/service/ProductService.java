@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.ServiceUnavailableException;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -17,7 +18,7 @@ import static java.util.Objects.isNull;
 public class ProductService {
 
     @Inject
-    ProductRepository repository;
+    private ProductRepository repository;
 
     public Uni<Product> createProduct(Product product) {
         checkForCompleteInput(product);
@@ -27,12 +28,7 @@ public class ProductService {
 
     public Uni<Product> findByName(String name ){
         return repository.findByName(name)
-                .onItem().ifNull().failWith(new NotFoundException());
-    }
-
-    public Uni<Product> findById(ObjectId id){
-        return repository.findById(id)
-                .onItem().ifNull().failWith(new NotFoundException());
+                .onItem().ifNull().failWith(new ServiceUnavailableException());
     }
 
     public Uni<List<Product>> list(){

@@ -3,11 +3,12 @@ package com.magalhaes.andre.entity;
 import io.quarkus.mongodb.panache.MongoEntity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.ProjectionFor;
+import org.bson.types.ObjectId;
 
 @MongoEntity
-@ProjectionFor(Salesman.class)
 public class Salesman {
 
+    private ObjectId id;
     private Integer registration;
     private String name;
 
@@ -17,6 +18,16 @@ public class Salesman {
         this.registration = registration;
         this.name = name;
     }
+
+    public Salesman(ObjectId id, Integer registration, String name) {
+        this.id = id;
+        this.registration = registration;
+        this.name = name;
+    }
+
+    public ObjectId getId() { return id; }
+
+    public void setId(ObjectId id) { this.id = id; }
 
     public Integer getRegistration() {
         return registration;

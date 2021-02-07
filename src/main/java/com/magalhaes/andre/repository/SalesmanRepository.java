@@ -12,8 +12,4 @@ public class SalesmanRepository implements ReactivePanacheMongoRepository<Salesm
     public Uni<Salesman> findByRegistration (Integer registration){
         return find("registration", registration).firstResult();
     }
-
-    public Uni<Salesman> findByName(String name){
-        return find("name", name).firstResult();
-    }
 }

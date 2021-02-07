@@ -1,7 +1,9 @@
 package com.magalhaes.andre.entity.sale;
 
+import javax.enterprise.inject.Model;
 import java.util.List;
 
+@Model
 public class SaleRequest {
 
     private Integer salesmanRegistration;

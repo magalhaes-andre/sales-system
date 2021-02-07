@@ -1,16 +1,43 @@
-package java.com.magalhaes.andre.resource;
+package com.magalhaes.andre.resource;
 
-import java.com.magalhaes.andre.entity.Salesman;
+import com.magalhaes.andre.entity.Salesman;
+import com.magalhaes.andre.service.SalesmanService;
+import io.smallrye.mutiny.Uni;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+@Path("/salesmen")
+@RequestScoped
 public class SalesmanResource {
 
-    public Salesman createSalesman(Salesman salesman){}
-    public Salesman updateSalesman(long id, Salesman newSalesman){}
-    public Salesman deleteSalesman(long id){}
-    public Salesman findSalesmanByName(){}
-    public Salesman findSalesmanByRegistration(){}
-    public List<Salesman> listSalesmen(){}
-    public List<Salesman> listSalesmenFilteredByName(){}
-    public List<Salesman> listSalesmenFilteredByRegistration(){}
+    @Inject
+    private SalesmanService service;
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Salesman> createSalesman(Salesman salesman){
+        return service.createSalesman(salesman);
+    }
+
+    @Path("/{registration}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Salesman> findSalesmanByRegistration(@PathParam("registration") Integer registration) {  return service.findByRegistration(registration); }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<List<Salesman>> listSalesmen(){ return service.list(); }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Salesman> updateSalesman(Salesman salesman){ return service.updateSalesman(salesman); }
+
+    @DELETE
+    public Uni<Void> deleteSalesman(Salesman salesman){ return service.deleteSalesman(salesman); }
 }

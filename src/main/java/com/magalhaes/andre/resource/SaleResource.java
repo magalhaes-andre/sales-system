@@ -1,16 +1,40 @@
-package java.com.magalhaes.andre.resource;
+package com.magalhaes.andre.resource;
 
-import java.com.magalhaes.andre.entity.Sale;
+import com.magalhaes.andre.entity.sale.Sale;
+import com.magalhaes.andre.entity.sale.SaleRequest;
+import com.magalhaes.andre.service.SaleService;
+import io.smallrye.mutiny.Uni;
+import org.bson.types.ObjectId;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+@Path("/sales")
+@RequestScoped
 public class SaleResource {
 
-    public Sale createSale(Sale sale){}
-    public Sale updateSale(long id, Sale newSale){}
-    public Sale deleteSale(long id){}
-    public Sale findSaleByName(){}
-    public Sale findSaleByRegistration(){}
-    public List<Sale> listSale(){}
-    public List<Sale> listSaleFilteredByName(){}
-    public List<Sale> listSaleFilteredByRegistration(){}
+    @Inject
+    private SaleService service;
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Uni<Void> createSale(SaleRequest request){ return service.createSale(request); }
+
+    @GET
+    @Path("{id}")
+    public Uni<Sale> findSaleById(@PathParam("id") ObjectId id){ return service.findSaleById(id); }
+
+    @GET
+    public Uni<List<Sale>> listSales(){ return service.list(); }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Sale> updateSale(Sale updatedSale){ return service.updateSale(updatedSale); }
+
+    @DELETE
+    public Uni<Void> deleteSale(Sale sale){ return service.deleteSale(sale); }
 }

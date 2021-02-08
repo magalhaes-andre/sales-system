@@ -10,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.InternalServerErrorException;
 import java.util.*;
+import java.util.function.Function;
 
 import static java.util.Objects.isNull;
 
@@ -36,18 +37,11 @@ public class SalesmanService {
         return repository.listAll();
     }
 
-    public Uni<Map<String, Integer>> listSalesmanBySaleQuantity(){
-        Map<String, Integer> salesmen = new HashMap<>();
+    public Uni<Map<String, Double>> listSalesmanBySaleQuantity(){
+        Map<String, Double> salesmen = new HashMap<>();
         List<Sale> sales = saleService.list().await().indefinitely();
 
-        sales.forEach(sale -> {
-            if(!salesmen.containsKey(sale.getSalesman().getName())){
-                salesmen.put(sale.getSalesman().getName(), 1);
-            } else {
-                salesmen.replace(sale.getSalesman().getName(), salesmen.get(sale.getSalesman().getName()) + 1);
-            }
-        });
-
+        toMap(salesmen, sales, (sale) -> 1d, (sale) -> salesmen.get(sale.getSalesman().getName()) + 1);
         return Uni.createFrom().item(salesmen);
     }
 
@@ -55,16 +49,20 @@ public class SalesmanService {
        Map<String, Double> salesmen = new HashMap<>();
        List<Sale> sales = saleService.list().await().indefinitely();
 
-       sales.forEach(sale -> {
-           if(!salesmen.containsKey(sale.getSalesman().getName())){
-               salesmen.put(sale.getSalesman().getName(), sale.getSaleTotal());
-           } else{
-               salesmen.replace(sale.getSalesman().getName(), salesmen.get(sale.getSalesman().getName()) + sale.getSaleTotal());
-           }
-       });
+       toMap(salesmen, sales, (sale) -> sale.getSaleTotal(), (sale) -> salesmen.get(sale.getSalesman().getName()) + sale.getSaleTotal());
 
        return Uni.createFrom().item(salesmen);
    }
+
+    private void toMap(Map<String, Double> salesmen, List<Sale> sales, Function<Sale, Double> identityProvider, Function<Sale, Double> mapFunction) {
+        sales.forEach(sale -> {
+            if(!salesmen.containsKey(sale.getSalesman().getName())){
+                salesmen.put(sale.getSalesman().getName(), identityProvider.apply(sale));
+            } else{
+                salesmen.replace(sale.getSalesman().getName(), mapFunction.apply(sale));
+            }
+        });
+    }
 
     public Uni<Salesman> updateSalesman(Salesman updatedSalesman){
         return repository.update(updatedSalesman)

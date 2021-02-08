@@ -37,7 +37,7 @@ public class SalesmanResource {
     @Path("/quantity")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Map<String, Integer>> listSalesmanBySaleQuantity(){ return service.listSalesmanBySaleQuantity(); }
+    public Uni<Map<String, Double>> listSalesmanBySaleQuantity(){ return service.listSalesmanBySaleQuantity(); }
 
     @Path("/total")
     @GET

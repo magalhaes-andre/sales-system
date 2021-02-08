@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "b9908fe4-8eeb-4dc5-b2cf-12339b4d29f5",
+		"name": "sales-system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Find By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "List All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/products/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List By Quantity Selled",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/products/quantity",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products",
+								"quantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"601f96c24c99346b441097cf\",\r\n    \"name\": \"Trakinas\",\r\n    \"price\": 32.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER}}/products/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/products",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Xis Salada\",\n    \"price\": 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER}}/products/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Salesmen",
+			"item": [
+				{
+					"name": "Find By Registration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/salesmen/2",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/salesmen/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List By Sales Quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/salesmen/quantity",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								"quantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List By Sales Total",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/salesmen/total",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								"total"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"601f96c24c99346b441097cf\",\r\n    \"name\": \"Trakinas\",\r\n    \"price\": 32.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER}}/salesmen/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Salesman",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/salesmen/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"registration\": 2,\n    \"name\": \"Zé\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER}}/salesmen/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "Find Sales By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/id",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/sales/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"sales",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"601f96c24c99346b441097cf\",\r\n    \"name\": \"Trakinas\",\r\n    \"price\": 32.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER}}/salesmen/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"salesmen",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sale",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"salesmanRegistration\": 2,\r\n  \"productsNames\": [\"Xis Salada\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER}}/sales/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"sales",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sale",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"60207367cc5d2c1b68c218e2\",\n        \"salesman\": {\n            \"id\": null,\n            \"registration\": 2,\n            \"name\": \"Zé\"\n        },\n        \"products\": [\n            {\n                \"id\": null,\n                \"name\": \"Xis Salada\",\n                \"price\": 12.0\n            },\n            {\n                \"id\": null,\n                \"name\": \"Pizza\",\n                \"price\": 50.0\n            }\n        ],\n        \"saleTotal\": 62.0\n    }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{SERVER}}/sales/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"sales",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

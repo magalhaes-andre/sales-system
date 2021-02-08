@@ -18,8 +18,9 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-resteasy'
     implementation 'io.quarkus:quarkus-rest-client-jackson'
-    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.quarkus:quarkus-junit5-mockito'
     testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'org.mockito:mockito-core'
 }
 
 group 'com.magalhaes_andre'
@@ -37,4 +38,11 @@ compileJava {
 
 compileTestJava {
     options.encoding = 'UTF-8'
+}
+
+quarkusBuild {
+    nativeArgs {
+        containerBuild = true
+        buildImage = "quay.io/quarkus/ubi-quarkus-native-image:20.3.1-java11"
+    }
 }

@@ -1,16 +1,15 @@
 package com.magalhaes.andre.service;
 
 import com.magalhaes.andre.entity.Salesman;
+import com.magalhaes.andre.entity.sale.Sale;
 import com.magalhaes.andre.exception.MissingInformationException;
 import com.magalhaes.andre.repository.SalesmanRepository;
 import io.smallrye.mutiny.Uni;
-import org.bson.types.ObjectId;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.NotFoundException;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 
@@ -19,6 +18,8 @@ public class SalesmanService {
 
     @Inject
     private SalesmanRepository repository;
+    @Inject
+    private SaleService saleService;
 
     public Uni<Salesman> createSalesman(Salesman salesman) {
         checkForCompleteInput(salesman);
@@ -34,6 +35,36 @@ public class SalesmanService {
     public Uni<List<Salesman>> list(){
         return repository.listAll();
     }
+
+    public Uni<Map<String, Integer>> listSalesmanBySaleQuantity(){
+        Map<String, Integer> salesmen = new HashMap<>();
+        List<Sale> sales = saleService.list().await().indefinitely();
+
+        sales.forEach(sale -> {
+            if(!salesmen.containsKey(sale.getSalesman().getName())){
+                salesmen.put(sale.getSalesman().getName(), 1);
+            } else {
+                salesmen.replace(sale.getSalesman().getName(), salesmen.get(sale.getSalesman().getName()) + 1);
+            }
+        });
+
+        return Uni.createFrom().item(salesmen);
+    }
+
+   public Uni<Map<String, Double>> listSalesmanBySaleTotal(){
+       Map<String, Double> salesmen = new HashMap<>();
+       List<Sale> sales = saleService.list().await().indefinitely();
+
+       sales.forEach(sale -> {
+           if(!salesmen.containsKey(sale.getSalesman().getName())){
+               salesmen.put(sale.getSalesman().getName(), sale.getSaleTotal());
+           } else{
+               salesmen.replace(sale.getSalesman().getName(), salesmen.get(sale.getSalesman().getName()) + sale.getSaleTotal());
+           }
+       });
+
+       return Uni.createFrom().item(salesmen);
+   }
 
     public Uni<Salesman> updateSalesman(Salesman updatedSalesman){
         return repository.update(updatedSalesman)

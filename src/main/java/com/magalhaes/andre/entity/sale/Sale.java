@@ -3,7 +3,6 @@ package com.magalhaes.andre.entity.sale;
 import com.magalhaes.andre.entity.Product;
 import com.magalhaes.andre.entity.Salesman;
 import io.quarkus.mongodb.panache.MongoEntity;
-import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import org.bson.types.ObjectId;
 
 import java.util.List;

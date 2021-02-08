@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Map;
 
 @Path("/products")
 @RequestScoped
@@ -33,6 +34,10 @@ public class ProductResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<List<Product>> listProducts(){ return service.list(); }
 
+    @Path("/quantity")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Map<String, Integer>> listProductsByQuantitySelled(){ return service.listProductsByQuantitySelled(); }
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

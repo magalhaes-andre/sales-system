@@ -1,20 +1,20 @@
 package com.magalhaes.andre.service;
 
-        import com.magalhaes.andre.entity.Product;
-        import com.magalhaes.andre.entity.sale.Sale;
-        import com.magalhaes.andre.entity.Salesman;
-        import com.magalhaes.andre.entity.sale.SaleRequest;
-        import com.magalhaes.andre.exception.MissingInformationException;
-        import com.magalhaes.andre.repository.SaleRepository;
-        import io.smallrye.mutiny.Uni;
-        import org.bson.types.ObjectId;
+import com.magalhaes.andre.entity.Product;
+import com.magalhaes.andre.entity.sale.Sale;
+import com.magalhaes.andre.entity.Salesman;
+import com.magalhaes.andre.entity.sale.SaleRequest;
+import com.magalhaes.andre.exception.MissingInformationException;
+import com.magalhaes.andre.repository.SaleRepository;
+import io.smallrye.mutiny.Uni;
+import org.bson.types.ObjectId;
 
-        import javax.enterprise.context.ApplicationScoped;
-        import javax.inject.Inject;
-        import java.util.ArrayList;
-        import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
-        import static java.util.Objects.isNull;
+import static java.util.Objects.isNull;
 
 @ApplicationScoped
 public class SaleService {

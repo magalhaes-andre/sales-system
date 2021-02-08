@@ -8,4 +8,5 @@ It is also expected to have a mongo db instance running:
 
 _(If you don't have it) => docker run -d --name mongodb -p 27017:27017 mongo_
 
+There are request examples in the Postman Collections in this repository.
 ### _There is also a Dockerfile for building this application into a container_ (Not working yet)

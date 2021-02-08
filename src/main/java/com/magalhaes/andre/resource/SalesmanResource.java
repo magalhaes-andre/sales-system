@@ -15,8 +15,12 @@ import java.util.Map;
 @RequestScoped
 public class SalesmanResource {
 
-    @Inject
     private SalesmanService service;
+
+    @Inject
+    public SalesmanResource(SalesmanService service) {
+        this.service = service;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

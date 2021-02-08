@@ -17,12 +17,14 @@ import static java.util.Objects.isNull;
 @ApplicationScoped
 public class SalesmanService {
 
-    @Inject
     private SalesmanRepository repository;
-    @Inject
     private SaleService saleService;
 
-    
+    @Inject
+    public SalesmanService(SalesmanRepository repository, SaleService saleService) {
+        this.repository = repository;
+        this.saleService = saleService;
+    }
 
     public Uni<Salesman> createSalesman(Salesman salesman) {
         checkForCompleteInput(salesman);

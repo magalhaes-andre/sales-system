@@ -10,21 +10,26 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.InternalServerErrorException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
 @ApplicationScoped
 public class SalesmanService {
 
-    @Inject
     private SalesmanRepository repository;
-    @Inject
     private SaleService saleService;
+
+    @Inject
+    public SalesmanService(SalesmanRepository repository, SaleService saleService) {
+        this.repository = repository;
+        this.saleService = saleService;
+    }
 
     public Uni<Salesman> createSalesman(Salesman salesman) {
         checkForCompleteInput(salesman);
         return repository.persist(salesman)
-                .onItem().transformToUni(item -> findByRegistration(salesman.getRegistration()));
+                .replaceWith(findByRegistration(salesman.getRegistration()));
     }
 
     public Uni<Salesman> findByRegistration(Integer registration){
@@ -36,34 +41,25 @@ public class SalesmanService {
         return repository.listAll();
     }
 
-    public Uni<Map<String, Integer>> listSalesmanBySaleQuantity(){
-        Map<String, Integer> salesmen = new HashMap<>();
-        List<Sale> sales = saleService.list().await().indefinitely();
-
-        sales.forEach(sale -> {
-            if(!salesmen.containsKey(sale.getSalesman().getName())){
-                salesmen.put(sale.getSalesman().getName(), 1);
-            } else {
-                salesmen.replace(sale.getSalesman().getName(), salesmen.get(sale.getSalesman().getName()) + 1);
-            }
-        });
-
-        return Uni.createFrom().item(salesmen);
+    public Uni<Map<String, Long>> listSalesmanBySaleQuantity(){
+        return saleService.list()
+                .onItem()
+                .transform(sales ->
+                        sales.stream().collect(Collectors.groupingBy(
+                            sale -> sale.getSalesman().getName(),
+                            Collectors.counting()
+                        ))
+                );
     }
 
    public Uni<Map<String, Double>> listSalesmanBySaleTotal(){
-       Map<String, Double> salesmen = new HashMap<>();
-       List<Sale> sales = saleService.list().await().indefinitely();
-
-       sales.forEach(sale -> {
-           if(!salesmen.containsKey(sale.getSalesman().getName())){
-               salesmen.put(sale.getSalesman().getName(), sale.getSaleTotal());
-           } else{
-               salesmen.replace(sale.getSalesman().getName(), salesmen.get(sale.getSalesman().getName()) + sale.getSaleTotal());
-           }
-       });
-
-       return Uni.createFrom().item(salesmen);
+       return saleService.list()
+               .onItem()
+               .transform(sales -> sales.stream().collect(Collectors.groupingBy(
+                    sale -> sale.getSalesman().getName(),
+                    Collectors.summingDouble(Sale::getSaleTotal)
+               ))
+       );
    }
 
     public Uni<Salesman> updateSalesman(Salesman updatedSalesman){

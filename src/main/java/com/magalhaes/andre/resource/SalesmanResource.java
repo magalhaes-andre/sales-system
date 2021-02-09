@@ -15,8 +15,12 @@ import java.util.Map;
 @RequestScoped
 public class SalesmanResource {
 
-    @Inject
     private SalesmanService service;
+
+    @Inject
+    public SalesmanResource(SalesmanService service) {
+        this.service = service;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,7 +41,7 @@ public class SalesmanResource {
     @Path("/quantity")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<Map<String, Integer>> listSalesmanBySaleQuantity(){ return service.listSalesmanBySaleQuantity(); }
+    public Uni<Map<String, Long>> listSalesmanBySaleQuantity(){ return service.listSalesmanBySaleQuantity(); }
 
     @Path("/total")
     @GET
